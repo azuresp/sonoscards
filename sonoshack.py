@@ -4,6 +4,13 @@ import urllib
 from soco.music_services import MusicService
 import spotify_add_album
 
+#state of play:
+# we can play the following:
+# * pandora station from favorites
+# * Spotify station from favorites
+# * Local album (by title)
+
+
 def play_favorite(player, title):
     favorites = x.get_sonos_favorites()['favorites']
     for favorite in favorites:
@@ -56,12 +63,25 @@ def play_spotify_album(player, uri):
     spotify_add_album.spotify_add_album(x, spotify, spotid)
     x.play_from_queue(0)
 
+def play():
+    info = x.get_current_transport_info()
+    if info['current_transport_state'] == 'PAUSED_PLAYBACK':
+        x.play()
+
+def pause():
+    info = x.get_current_transport_info()
+    if info['current_transport_state'] != 'PAUSED_PLAYBACK':
+        x.pause()
+
 x = SoCo('192.168.0.10')
 
 # to play:
 print(x.player_name)
+print(x.play_mode)
+print(x.get_current_transport_info())
+# print(x.volume)
 # play_favorite(x, 'Toddler Radio')
 # play_favorite(x, 'Choo Choo Soul')
 # play_favorite(x, 'Bat out of Hell [Bonus Tracks]')
-play_album(x, 'Frozen (Soundtrack)')
+# play_album(x, 'Frozen (Soundtrack)')
 # list_favorites(x)
