@@ -22,9 +22,9 @@ def parse(request):
             print("ERROR: 3 parameters required for source")
         else:
             play_thing(params[1], params[2])
-    elif params[0] == 'mode':
+    elif params[0] == 'command':
         if len(params) != 2:
-            print("ERROR: 2 parameters required for mode")
+            print("ERROR: 2 parameters required for command(/mode)")
         else:
             set_mode(params[1])
     elif params[0] == 'volume':
@@ -35,4 +35,4 @@ def parse(request):
     else:
         print("ERROR: unrecognized command")
 
-parse("source~album~play")
+#parse("source~album~play")
