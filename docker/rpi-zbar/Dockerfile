@@ -53,9 +53,9 @@ RUN cd /tmp && \
 	-D BUILD_PERF_TESTS=NO \
 	.. && \
     make VERBOSE=1 && \
-    make && \
+    make -j4 && \
     make install 
-
+RUN pip install zbar-py Image
 RUN ["cross-build-end"]
 
 CMD ["/bin/bash"]
