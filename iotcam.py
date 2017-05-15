@@ -5,6 +5,7 @@ import sys
 import cv2
 import zbar
 from PIL import Image
+import sonosclient
 
 # Debug mode
 DEBUG = False
@@ -55,6 +56,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     for symbol in image:
         # do something useful with results
         print('decoded', symbol.type, 'symbol', '"%s"' % symbol.data)
+        sonosclient.parse(symbol.data)
 
     # show the frame
     cv2.imshow("#iothack15", output)

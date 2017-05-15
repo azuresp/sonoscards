@@ -12,10 +12,27 @@ def set_volume(volume):
     put('volume', {'level':volume})
 
 def put(command, payload):
-    response = requests.put("http://127.0.0.1:5000/" + command, json=payload)
+    response = requests.put("http://badhorse:5000/" + command, json=payload)
     print(response.status_code, response.reason)
 
+def parse(request):
+    params = request.split('~')
+    if params[0] == 'source':
+        if len(params) != 3:
+            print("ERROR: 3 parameters required for source")
+        else:
+            play_thing(params[1], params[2])
+    elif params[0] == 'mode':
+        if len(params) != 2:
+            print("ERROR: 2 parameters required for mode")
+        else:
+            set_mode(params[1])
+    elif params[0] == 'volume':
+        if len(params != 2):
+            print("ERROR: 2 parameters required for volume")
+        else:
+            set_volume(params[1])
+    else:
+        print("ERROR: unrecognized command")
 
-play_thing('album', 'Abba Gold')
-set_volume(4)
-set_mode('play')
+parse("source~album~play")
