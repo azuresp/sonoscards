@@ -3,3 +3,4 @@ __pycache__/
 docker/
 export/
 !docker/rpi-zbar/Dockerfile
+*.log

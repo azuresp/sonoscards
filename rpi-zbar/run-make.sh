@@ -8,6 +8,6 @@ cmake \
 -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.1.0/modules \
 -D BUILD_EXAMPLES=ON ..
 
-make -j4
+make
 make install
 ldconfig

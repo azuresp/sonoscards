@@ -1,6 +1,4 @@
-FROM jsurf/rpi-raspbian:latest
-
-RUN ["cross-build-start"]
+FROM resin/rpi-raspbian:latest
 
 RUN apt-get update && \
     apt-get install -y \
@@ -34,9 +32,6 @@ RUN apt-get update && \
   apt-get clean
 
 RUN pip3 install numpy
-# defining compilers
-ENV CC /usr/bin/clang
-ENV CXX /usr/bin/clang++
 
 RUN cd /tmp && \ 
     wget -q -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip && \
@@ -48,8 +43,6 @@ ADD run-make.sh /tmp
 RUN chmod +x /tmp/run-make.sh
 RUN #!/tmp/run-make.sh
     
-
 RUN pip3 install zbar-py Image
-RUN ["cross-build-end"]
 
 CMD ["/bin/bash"]
