@@ -24,14 +24,16 @@ RUN apt-get update && \
 	libeigen3-dev \
 	python3-dev \
 	libpython3-dev \
-	python-numpy \
 	libunicap2-dev \
 	libv4l-0 \
 	libv4l-dev \
 	v4l-utils \
+	python3-pip \
+	python3-picamera \
 	&& \
   apt-get clean
 
+RUN pip3 install numpy
 # defining compilers
 ENV CC /usr/bin/clang
 ENV CXX /usr/bin/clang++
@@ -40,22 +42,14 @@ RUN cd /tmp && \
     wget -q -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip && \
     unzip -q opencv.zip && \
     wget -q -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip && \
-    unzip -q opencv_contrib.zip && \
-    mkdir opencv-3.1.0/build && \
-    cd opencv-3.1.0/build && \
-    cmake \
-        -D CMAKE_BUILD_TYPE=RELEASE \
-	-D BUILD_opencv_python2=YES \
-	-D BUILD_JPEG=YES \
-	-D WITH_WEBP=NO \
-        -D WITH_OPENEXR=NO \ 
-        -D BUILD_TESTS=NO \
-	-D BUILD_PERF_TESTS=NO \
-	.. && \
-    make VERBOSE=1 && \
-    make -j4 && \
-    make install 
-RUN pip install zbar-py Image
+    unzip -q opencv_contrib.zip
+
+ADD run-make.sh /tmp
+RUN chmod +x /tmp/run-make.sh
+RUN #!/tmp/run-make.sh
+    
+
+RUN pip3 install zbar-py Image
 RUN ["cross-build-end"]
 
 CMD ["/bin/bash"]
