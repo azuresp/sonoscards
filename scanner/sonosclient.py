@@ -12,7 +12,7 @@ def set_volume(volume):
     put('volume', {'level':volume})
 
 def put(command, payload):
-    response = requests.put("http://badhorse:5000/" + command, json=payload)
+    response = requests.put("http://localhost:5000/" + command, json=payload)
     print(response.status_code, response.reason)
 
 def parse(request):

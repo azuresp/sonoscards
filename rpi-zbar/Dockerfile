@@ -24,11 +24,20 @@ RUN cd /tmp && \
     wget -q -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip && \
     unzip -q opencv_contrib.zip
 
-ADD *.sh /tmp/
-RUN chmod +x /tmp/*.sh
-RUN /tmp/run-cmake.sh
-RUN /tmp/run-make.sh
-    
+RUN mkdir /tmp/opencv-3.1.0/build && \
+    cd /tmp/opencv-3.1.0/build && \
+    cmake \
+    -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-3.1.0/modules \
+    -D BUILD_EXAMPLES=ON ..
+
+RUN cd /tmp/opencv-3.1.0/build && \
+    make && \
+    make install && \
+    ldconfig
+
 RUN pip3 install zbar-py Image
 
 CMD ["/bin/bash"]
