@@ -47,8 +47,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # create a reader
     image = scanner.scan(gray)
 
-    # extract results
-    for symbol in image:
+    if len(image) > 0:
+        symbol = image[0]
         print('decoded', symbol.type, 'symbol', '"%s"' % symbol.data)
         sonosclient.parse(symbol.data.decode('utf-8'))
 
@@ -61,7 +61,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # Wait for the magic key
     keypress = cv2.waitKey(1) & 0xFF
     if keypress == ord('q'):
-    	break
+        break
 
 # When everything is done, release the capture
 camera.close()
