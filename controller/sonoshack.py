@@ -12,14 +12,17 @@ import spotify_add_album
 
 
 def play_favorite(player, title):
-    favorites = x.get_sonos_favorites()['favorites']
+    favorites = x.music_library.get_sonos_favorites()
     for favorite in favorites:
-        if favorite['title'] == title:
-            uri = favorite['uri']
+        if favorite.title == title:
+            uri = favorite.resources[0].uri
             if uri.startswith('x-rincon-cpcontainer') and 'spotify' in uri:
-                play_spotify_album(player, uri)
+                # March 18, 2018: at this point spotify via Sonos is completely broken.
+                # SoCo can't retrieve active accounts, so the spotify workaround is dead.
+                #play_spotify_album(player, uri)
+                pause()
             else:
-                play_uri(player, favorite['uri'], favorite['meta'], favorite['title'])
+                play_uri(player, uri, '', favorite.title)
             break
 
 def play_uri(player, uri, meta, title):
@@ -79,6 +82,11 @@ x = SoCo('192.168.0.10')
 print(x.player_name)
 print(x.play_mode)
 print(x.get_current_transport_info())
+
+# print(MusicService.get_subscribed_services_names()) 
+# print(MusicService.get_all_music_services_names()) 
+
+
 # print(x.volume)
 # play_favorite(x, 'Toddler Radio')
 # play_favorite(x, 'Choo Choo Soul')
