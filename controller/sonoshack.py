@@ -21,6 +21,11 @@ def play_favorite(player, title):
                 # SoCo can't retrieve active accounts, so the spotify workaround is dead.
                 #play_spotify_album(player, uri)
                 pause()
+            elif favorite.description == 'Sonos Playlist':
+                print('playing playlist %s' % title)
+                player.clear_queue()
+                player.add_to_queue(favorite)
+                player.play_from_queue(0)
             else:
                 play_uri(player, uri, '', favorite.title)
             break
@@ -88,8 +93,9 @@ print(x.get_current_transport_info())
 
 
 # print(x.volume)
-# play_favorite(x, 'Toddler Radio')
+play_favorite(x, 'Toddler Radio')
 # play_favorite(x, 'Choo Choo Soul')
+# play_favorite(x, 'Bob the Builder')
 # play_favorite(x, 'Bat out of Hell [Bonus Tracks]')
 # play_album(x, 'Frozen (Soundtrack)')
 # list_favorites(x)
