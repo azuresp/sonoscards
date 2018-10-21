@@ -4,7 +4,7 @@ from soco import SoCo
 import sonoshack
 
 app = Flask(__name__)
-player = SoCo('192.168.0.10')
+player = SoCo('192.168.0.110')
 current_type = ''
 current_title = ''
 current_volume = player.volume

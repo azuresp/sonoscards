@@ -81,7 +81,7 @@ def pause():
     if info['current_transport_state'] != 'PAUSED_PLAYBACK':
         x.pause()
 
-x = SoCo('192.168.0.10')
+x = SoCo('192.168.0.110')
 
 # to play:
 print(x.player_name)
